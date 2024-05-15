@@ -1,25 +1,21 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 
 # Create your models here.
+class User(AbstractUser):
 
-class EmployeurType(models.TextChoices):
-    # list Of possibility
-    # The left member is the value stored in the database and using in the code
-    # The right member is the value displayed in the admin interface
-    SUPERADMIN = 'Super Admin'
-    ADMIN = 'Admin'
-    USER = 'User'
+    is_admin = models.BooleanField('Manager', default=False)
+    is_employer = models.BooleanField('Employee', default=True)
 
 
 class Employeur(models.Model):
-    id = models.CharField(primary_key=True, max_length=100, unique=True)
+    id = models.AutoField(primary_key=True, unique=True)
     Nom = models.CharField(max_length=100)
     Prenom = models.CharField(max_length=100)
     Email = models.EmailField(max_length=100, unique=True)
     Username = models.CharField(max_length=100, unique=True)
     Poste = models.CharField(max_length=100)
-    type = models.CharField(choices=EmployeurType.choices, max_length=11)
 
     # inner class could be added to each model
     # it must be located just after the last field definition
@@ -38,7 +34,7 @@ class Employeur(models.Model):
 
 
 class Task(models.Model):
-    id = models.CharField(primary_key=True, max_length=100, unique=True)
+    id = models.AutoField(primary_key=True, unique=True)
     Titre = models.CharField(max_length=100)
     Description = models.TextField()
     DateDebut = models.DateField()
@@ -67,7 +63,7 @@ def __str__(self) -> str:
 
 
 class Penalite(models.Model):
-    id = models.CharField(primary_key=True, max_length=100, unique=True)
+    id = models.AutoField(primary_key=True, unique=True)
     NbrPenalite = models.IntegerField()
     DatePenalite = models.DateField()
     Employeur = models.ForeignKey(Employeur, on_delete=models.CASCADE)
