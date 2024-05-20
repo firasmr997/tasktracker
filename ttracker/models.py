@@ -35,31 +35,18 @@ class Employeur(models.Model):
 
 class Task(models.Model):
     id = models.AutoField(primary_key=True, unique=True)
-    Titre = models.CharField(max_length=100)
-    Description = models.TextField()
-    DateDebut = models.DateField()
-    DateFin = models.DateField()
-    Employeur = models.ManyToManyField(Employeur)
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    datedebut = models.DateField()
+    datefin = models.DateField()
 
     class Meta:
         db_table = 'tasks'
 
     def __str__(self) -> str:
-        return f'{self.Titre} - {self.id}'
+        return f'{self.title} - {self.id}'
 
 
-class EmployeurTask(models.Model):
-    employeur = models.ForeignKey(Employeur, on_delete=models.CASCADE)
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
-
-
-class Meta:
-    db_table = 'employeur_tasks'
-    unique_together = ('employeur', 'tasks')
-
-
-def __str__(self) -> str:
-    return f'{self.employeur.id} - {self.task.id}'
 
 
 class Penalite(models.Model):

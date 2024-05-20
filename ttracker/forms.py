@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User
+from .models import User, Task
 
 
 class LoginForm(forms.Form):
@@ -53,3 +53,40 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2', 'is_admin', 'is_employer')
+
+
+class TaskForm(forms.Form):
+    title = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control"
+            }
+        )
+    )
+    description = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control"
+            }
+        )
+    )
+    datedebut = forms.DateField(
+        widget=forms.DateInput(
+            attrs={
+                "class": "form-control",
+                'type': 'date'
+            }
+        )
+    )
+    datefin = forms.DateField(
+        widget=forms.DateInput(
+            attrs={
+                "class": "form-control",
+                'type': 'date'
+            }
+        )
+    )
+
+    class Meta:
+        model = Task
+        fields = ('title', 'description', 'datefin', 'datedebut')

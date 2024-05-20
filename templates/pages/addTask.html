@@ -121,17 +121,17 @@
 
 
         <li class="nav-item">
-            <a class="nav-link " href="#task">
+            <a class="nav-link " href="{% url 'manager' %}">
                 <i class="bi bi-layout-text-window-reverse"></i>
                 <span>Tasks</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link " href="#employees">
+            <a class="nav-link " href="{% url 'manager' %}">
                 <i class="bi bi-person"></i>
                 <span>Employees</span>
             </a>
-        </li><!-- End Dashboard Nav -->
+        </li>
     </ul>
 
 </aside><!-- End Sidebar-->
@@ -146,90 +146,59 @@
             </ol>
         </nav>
     </div><!-- End Page Title -->
-    <section class="section" id="task">
-        <div class="row">
-            <div class="col-lg-12">
-
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Tasks Table</h5>
-
-                        <!-- Table with stripped rows -->
-                        <table class="table datatable">
-                            <thead>
-                            <tr>
-                                <th>
-                                    <b>T</b>itle
-                                </th>
-                                <th>Description</th>
-                                <th>Start Date</th>
-                                <th>Deadline</th>
-                                <th>Status</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for x in tasks %}
-                                <tr>
-                                    <td>{{ x.title }}</td>
-                                    <td>{{ x.description }}</td>
-                                    <td>{{ x.datedebut }}</td>
-                                    <td>{{ x.datefin }}</td>
-
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                                <a type="button" href="{% url 'addTask' %}" class="btn btn-primary" style="float: right">Add Task</a>
-
-                        <!-- End Table with stripped rows -->
-
-                    </div>
-                </div>
-            </div>
+    {% if msg %}
+        <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+             role="alert">
+            {{ msg | safe }}
         </div>
-    </section>
 
-    <section class="section" id="employees">
+    {% endif %}
+    <section class="section">
         <div class="row">
             <div class="col-lg-12">
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Employees</h5>
+                        <h5 class="card-title">Add Task</h5>
 
-                        <!-- Table with stripped rows -->
-                        <table class="table datatable">
-                            <thead>
-                            <tr>
-                                <th>
-                                    <b>N</b>om
-                                </th>
-                                <th>Prenom</th>
-                                <th>Username</th>
-                                <th>Email</th>
-                                <th>Poste</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for x in employee %}
-                                <tr>
+                        <!-- General Form Elements -->
+                        <form action="{% url 'addTask' %}" method="post" autocomplete="off">
+                            {% csrf_token %}
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Title</label>
+                                {{ form.title }}
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Description</label>
+                                {{ form.description }}
+                            </div>
 
-                                    <td>{{ x.Nom }}</td>
-                                    <td>{{ x.Prenom }}</td>
-                                    <td>{{ x.Username }}</td>
-                                    <td>{{ x.Email }}</td>
-                                    <td>{{ x.Poste }}</td>
 
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                        <!-- End Table with stripped rows -->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="col-sm-2 col-form-label">Start Date</label>
+                                    {{ form.datedebut }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="col-sm-2 col-form-label">Deadline</label>
+                                    {{ form.datefin }}
+                                </div>
+                            </div>
+                       
+
+                            <div class="row mb-3">
+                                <div class="col-sm-10">
+                                    <button type="submit" class="btn btn-primary">Add</button>
+                                </div>
+                            </div>
+
+                        </form><!-- End General Form Elements -->
 
                     </div>
                 </div>
 
             </div>
+
         </div>
     </section>
 

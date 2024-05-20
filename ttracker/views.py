@@ -1,8 +1,9 @@
 # Create your views here.
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
+from .models import Task, Employeur
 
-from .forms import SignUpForm, LoginForm
+from .forms import SignUpForm, LoginForm, TaskForm
 
 
 def home(request):
@@ -50,14 +51,33 @@ def login_view(request):
 
 
 def admin(request):
-    return render(request, 'pages/admin.html')
+    employee = Employeur.objects.all()
+    tasks = Task.objects.all()
+    return render(request, 'pages/admin.html', {"tasks": tasks, "employee": employee})
+
+
+def addTask(request):
+    msg = None
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                msg = 'Task added successfully'
+                return redirect('/')
+            except:
+                pass
+    else:
+        msg = 'Invalid form'
+        form = TaskForm()
+    return render(request, 'pages/addTask.html', {"form": form,"msg": msg})
 
 
 def employer(request):
-    return render(request, 'pages/employee.html')
+    tasks = Task.objects.all()
+    return render(request, 'pages/employee.html', {"tasks": tasks})
 
 
 def logout_user(request):
     logout(request)
     return redirect('login_view')
-

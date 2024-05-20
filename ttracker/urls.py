@@ -6,6 +6,8 @@ urlpatterns = [
     path("logout/", logout_user, name="logout_user"),
     path("register", register, name="register"),
     path("manager", admin, name="manager"),
-    path("employee", employer, name="employee")
+    path("employee", employer, name="employee"),
+    path("addTask", addTask, name="addTask")
+
 
 ]
