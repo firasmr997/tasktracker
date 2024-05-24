@@ -7,7 +7,8 @@ urlpatterns = [
     path("register", register, name="register"),
     path("manager", admin, name="manager"),
     path("employee", employer, name="employee"),
-    path("addTask", addTask, name="addTask")
+    path("addTask", addTask, name="addTask"),
+    path("addEmployee", addEmployee, name="addEmployee")
 
 
 ]

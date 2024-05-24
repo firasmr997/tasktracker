@@ -4,7 +4,6 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class User(AbstractUser):
-
     is_admin = models.BooleanField('Manager', default=False)
     is_employer = models.BooleanField('Employee', default=True)
 
@@ -37,16 +36,14 @@ class Task(models.Model):
     id = models.AutoField(primary_key=True, unique=True)
     title = models.CharField(max_length=100)
     description = models.TextField()
-    datedebut = models.DateField()
-    datefin = models.DateField()
+    datedebut = models.DateField(blank=True, null=True)
+    datefin = models.DateField(blank=True, null=True)
 
     class Meta:
         db_table = 'tasks'
 
     def __str__(self) -> str:
         return f'{self.title} - {self.id}'
-
-
 
 
 class Penalite(models.Model):

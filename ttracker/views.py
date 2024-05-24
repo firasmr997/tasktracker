@@ -68,9 +68,24 @@ def addTask(request):
             except:
                 pass
     else:
-        msg = 'Invalid form'
         form = TaskForm()
-    return render(request, 'pages/addTask.html', {"form": form,"msg": msg})
+    return render(request, 'pages/addTask.html', {"form": form, "msg": msg})
+
+
+def addEmployee(request):
+    msg = None
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                msg = 'Employee added successfully'
+                return redirect('/')
+            except:
+                pass
+    else:
+        form = TaskForm()
+    return render(request, 'pages/addEmployee.html', {"form": form, "msg": msg})
 
 
 def employer(request):
